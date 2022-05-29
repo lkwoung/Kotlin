@@ -2,7 +2,7 @@ package com.lkwoung.kotlinpractice
 
 // pojo 클래스 : 모델이 되는 클래스, 메소드가 작동하는 클래스가 아닌 비어있는 틀 역할(자바)
 // Kotlin -> 데이타 클래스 : 데이터를 다루는 클래스
-
+// 여러개의 데이터 클래스를 한 파일에서 관리할 수 있음 (자바에서는 어려움)
 data class Ticket(val companyName : String, val name : String, var date : String,
 val seatNumber : Int)
 //각각의 변수는 class의 property처럼 사용이 가능,
