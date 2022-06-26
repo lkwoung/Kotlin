@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.lkwoung.psytest.R
+import kotlinx.android.synthetic.main.fragment_result.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,6 +21,8 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class ResultFragment : Fragment() {
+    var option = -1
+    lateinit var navController: NavController
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -34,9 +39,43 @@ class ResultFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        option = arguments?.getInt("index")?:-1 //만약에 null 이면 -1반환
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_result, container, false)
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(view)
+        setResult(option)
+
+        btn_home.setOnClickListener {
+            navController.navigate(R.id.action_resultFragment_to_mainFragment2)
+        }
+    }
+
+    fun setResult(option: Int){
+        when(option){
+            1 -> {
+             tv_main.text="You are a QUITTER!"   // tv_main.setText("")와 동일
+             tv_sub.text="You can let the person easily."
+            }
+            2 -> {
+                tv_main.text="You should focus on yourself"
+                tv_sub.text="You become really clingy to your ex."
+            }
+            3 -> {
+                tv_main.text="You should take it easy"
+                tv_sub.text="You can do crazy things no matter what it takes."
+            }
+            4 -> {
+                tv_main.text="You are pretty mature"
+                tv_sub.text="You can easuly accept the break-up"
+            }
+
+        }
+    }
+
 
     companion object {
         /**

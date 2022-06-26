@@ -5,7 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.lkwoung.psytest.R
+import kotlinx.android.synthetic.main.fragment_selection.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,7 +21,8 @@ private const val ARG_PARAM2 = "param2"
  * Use the [SelectionFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SelectionFragment : Fragment() {
+class SelectionFragment : Fragment(), View.OnClickListener {
+    lateinit var navController: NavController
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -57,4 +62,33 @@ class SelectionFragment : Fragment() {
                 }
             }
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(view)
+        btn_back.setOnClickListener(this)
+        option_1.setOnClickListener(this)
+        option_2.setOnClickListener(this)
+        option_3.setOnClickListener(this)
+        option_4.setOnClickListener(this)
+    }
+
+    override fun onClick(p0: View?) {
+        //TODO("Not yet implemented"
+        when(p0?.id){//p0가 null 되서는 안되기 때문 view가 null이 아니면 id 가져오고 null이면 null반환
+            R.id.option_1 -> {navigateWithIndex(1)}
+            R.id.option_2 -> {navigateWithIndex(2)}
+            R.id.option_3 -> {navigateWithIndex(3)}
+            R.id.option_4 -> {navigateWithIndex(4)}
+            R.id.btn_back -> {
+                navController.popBackStack()
+            }
+        }
+    }
+
+    fun navigateWithIndex(index: Int){
+        val bundle :Bundle = bundleOf("index" to index)
+        navController.navigate(R.id.action_selectionFragment_to_resultFragment, bundle)
+    }
+
 }
